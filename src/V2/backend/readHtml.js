@@ -16,14 +16,24 @@ const activateHtml = (context, uri) => {
 
     panel.webview.onDidReceiveMessage(async (message) => {
         const userRootFolder = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
-        const schemasPath = userRootFolder ? path.join(userRootFolder, "Config", "Schemas") : undefined;
         const folderPath = path.dirname(uri.fsPath);
+        const text = await vscode.workspace.fs.readFile(uri);
+
+        const fileText = Buffer
+            .from(text)
+            .toString("utf8");
+        const match = fileText.match(
+            /const\s+tableName\s*=\s*["'`](.*?)["'`]/
+        );
+
+        const tableName = match?.[1];
+        const toConfigPath = userRootFolder ? path.join(userRootFolder, "Config", "Schemas", `${tableName}.json`) : undefined;
 
         await handleWebviewMessage({
             message,
             panel,
             toPath: folderPath,
-            schemasPath,
+            toConfigPath,
             inTargetPath: userRootFolder
         });
     });

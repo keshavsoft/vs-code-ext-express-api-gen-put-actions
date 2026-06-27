@@ -3,7 +3,7 @@ export async function executeGenerationTask({
     actionLabel,
     tableName,
     toPath,
-    configPath,
+    toConfigPath,
     generateFunc,
     inTargetPath
 }) {
@@ -18,7 +18,7 @@ export async function executeGenerationTask({
             isAnnounce: true,
             inTargetPath,
             tableName,
-            toConfigPath: configPath,
+            toConfigPath,
             inGenerateRest: true,
             toPath
         });
