@@ -23,7 +23,8 @@ const activateHtml = (context, uri) => {
             message,
             panel,
             toPath: folderPath,
-            schemasPath
+            schemasPath,
+            inTargetPath: userRootFolder
         });
     });
 };
